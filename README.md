@@ -1,16 +1,13 @@
 ###RtpSdk demo
 
 # How to use 
-`
+```
 dependencies {
-
     implementation 'com.renogy.rdpsdk:android:1.0.0'
 }
-
-`
+```
 ```
     maven { url = uri("https://raw.githubusercontent.com/121104115wyb/repository/master") }
-
 ```
 
 
