@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">RdpDemo</string>
+    <string name="connect_ble">Please connect to Bluetooth first！</string>
+    <string name="scan_tips_location_service_disabled">Location service is disabled</string>
+    <string name="scan_tips_no_location_permission">Scan BLE device need fine location permission</string>
+    <string name="scan_connected">Connected</string>
+    <string name="scan_disconnected">Disconnected</string>
+    <string name="scan_connect_timeout">Connect timeout</string>
+    <string name="scan_connection_error">Connection error</string>
+    <string name="scan_bt_disabled">Bluetooth of your mobile phone is turned off</string>
+    <string name="cancel">Cancel</string>
+    <string name="connect">Connect</string>
+    <string name="proceed">Proceed</string>
+    <string name="device_address">Device Address</string>
+    <string name="total_power_generation">Total Power Generation</string>
+    <string name="multiple_commands">Multiple commands</string>
+    <string name="wait_command_finish">Wait for the command to finish</string>
+    <string name="solar_volts">Solar Volts</string>
+    <string name="device_sku">Device Sku</string>
+    <string name="output_volts">Output Volts</string>
+    <string name="output_frequency">Output Frequency</string>
+
+</resources>
