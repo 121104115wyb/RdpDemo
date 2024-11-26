@@ -80,18 +80,20 @@ class BtUtil private constructor() {
     }
 
     /**
-     * 发送数据
+     * @param bleMac  MAC address of Bluetooth
+     * @param hexStr  Command
+     * @param tag    The unique identifier of the command
      */
-    fun send(address: String, hexStr: String, tag: String) {
+    fun send(bleMac: String, hexStr: String, tag: String) {
 //        mBleService?.send(address, hexStr, mEncrypt)
-        val gatt = mBleService?.getBluetoothGatt(address)
+        val gatt = mBleService?.getBluetoothGatt(bleMac)
         val character = GattUtil.getGattCharacteristic(
             gatt,
             UUID.fromString(BleConsts.SEND_SERVICE_UUID),
             UUID.fromString(BleConsts.SEND_CHART_UUID)
         )
         this.tag = tag
-        Log.d(TAG, "mac:$address\nhexCmd:$hexStr\ntag:$tag")
+        Log.d(TAG, "mac:$bleMac\nhexCmd:$hexStr\ntag:$tag")
         mBleService?.send(gatt, character, hexStr, mEncrypt)
     }
 

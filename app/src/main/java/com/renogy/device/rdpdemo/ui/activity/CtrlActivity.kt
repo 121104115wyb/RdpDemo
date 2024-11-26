@@ -74,6 +74,10 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
         vb.deviceAddress.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
+                /**
+                 * DeviceType.CTRL  the device type
+                 * CtrlConsts.TOTAL_POWER_GENERATION the parameter name of the device
+                 */
                 val cmdEntity =
                     ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.DEVICE_ADDRESS)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
