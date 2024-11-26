@@ -1,8 +1,7 @@
 # RtpSdk demo
 ### The off-grid device SDK provided by our company has functions such as reading and parsing device parameters, and users can customize and develop according to their own needs
 
-[[How To Use](https://github.com/121104115wyb/RdpDemo/edit/master/README.md)] 
-
+[[How To Use](https://github.com/121104115wyb/RdpDemo/wiki)] 
 
 
 # License
