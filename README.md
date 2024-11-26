@@ -1,16 +1,7 @@
-###RtpSdk demo
+# RtpSdk demo
+### The off-grid device SDK provided by our company has functions such as reading and parsing device parameters, and users can customize and develop according to their own needs
 
-# How to use 
-```
-dependencies {
-    implementation 'com.renogy.rdpsdk:android:1.0.0'
-}
-```
-```
-    maven { url = uri("https://raw.githubusercontent.com/121104115wyb/repository/master") }
-```
-
-
+[[How To Use](https://github.com/121104115wyb/RdpDemo/edit/master/README.md)] 
 
 
 
@@ -24,4 +15,4 @@ You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
+Unless required by applicable law or agreed to in writing, Unless required by applicable law or agreed to in writing, Otherwise, the software cannot be used for any commercial purpose
