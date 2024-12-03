@@ -2,6 +2,7 @@ package com.renogy.device.rdpdemo.ui.activity
 
 import android.annotation.SuppressLint
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import com.renogy.device.rdplibrary.ProtocolsConsts
 import com.renogy.device.rdplibrary.device.anotation.DeviceType
 import com.renogy.device.rdplibrary.device.ctrl.CtrlConsts
@@ -13,6 +14,7 @@ import com.renogy.device.rdpdemo.SendCmdService
 import com.renogy.device.rdpdemo.consts.DeviceConsts
 import com.renogy.device.rdpdemo.databinding.ActivityCtrlBinding
 import com.renogy.device.rdpdemo.util.BtUtil
+import com.renogy.device.rdpdemo.util.StrUtils
 
 
 /**
@@ -105,7 +107,7 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onCharChanged(mac: String, hexResp: String, cmdTag: String) {
-        if (boSingleCmd){
+        if (boSingleCmd) {
             val rspCheck = ModBusUtils.simpleCheck(hexResp)
             if (!rspCheck) return
             val baseParseEntity = ProtocolsConsts.parseResp(cmdTag, hexResp)
@@ -124,11 +126,15 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
                     vb.content.text = baseParseEntity.result() + UnitConsts.VOLTS
                 }
             }
-        }else {
+        } else {
             super.onCharChanged(mac, hexResp, cmdTag)
             //Parse the response value received from Bluetooth
             val baseParseEntity = ProtocolsConsts.parseResp(cmdTag, hexResp)
-            appendText("\ncmdtag:" + cmdTag + "\nresult: ${baseParseEntity.result()}")
+            Log.d("testCmdTag", "cmdTag:$cmdTag")
+            appendText(
+                "\nparamsName:" + StrUtils.getParamsName(cmdTag)
+                        + "\nresult: ${baseParseEntity.result()}"
+            )
         }
     }
 

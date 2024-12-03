@@ -3,27 +3,31 @@ package com.renogy.device.rdpdemo.ui.activity
 import android.annotation.SuppressLint
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import com.renogy.device.rdplibrary.ProtocolsConsts
-import com.renogy.device.rdplibrary.device.anotation.DeviceType
-import com.renogy.device.rdplibrary.device.inv.InvConsts
-import com.renogy.device.rdplibrary.device.parse.UnitConsts
-import com.renogy.device.rdplibrary.utils.ModBusUtils
 import com.renogy.device.rdpdemo.R
 import com.renogy.device.rdpdemo.SendCmdEntity
 import com.renogy.device.rdpdemo.SendCmdService
 import com.renogy.device.rdpdemo.consts.DeviceConsts
-import com.renogy.device.rdpdemo.databinding.ActivityInvBinding
+import com.renogy.device.rdpdemo.databinding.ActivityDccBinding
 import com.renogy.device.rdpdemo.util.BtUtil
 import com.renogy.device.rdpdemo.util.StrUtils
+import com.renogy.device.rdplibrary.ProtocolsConsts
+import com.renogy.device.rdplibrary.device.anotation.DeviceType
+import com.renogy.device.rdplibrary.device.dcc.DCCConsts
+import com.renogy.device.rdplibrary.device.parse.UnitConsts
+import com.renogy.device.rdplibrary.utils.ModBusUtils
 
 /**
- * 逆变器
+ * @author Create by 17474 on 2024/12/3.
+ * Email： lishuwentimor1994@163.com
+ * Describe：DCC设备
  */
-class InvActivity : BaseBleActivity<ActivityInvBinding>() {
+class DCCActivity : BaseBleActivity<ActivityDccBinding>() {
+
+    override val viewBinding: ActivityDccBinding
+        get() = ActivityDccBinding.inflate(layoutInflater, bindView.root, true)
+
     private var boCanStartMultipleCommands = true
     private var boSingleCmd = false
-    override val viewBinding: ActivityInvBinding
-        get() = ActivityInvBinding.inflate(layoutInflater, bindView.root, true)
 
     override fun initView() {
         vb.content.movementMethod = ScrollingMovementMethod()
@@ -57,40 +61,53 @@ class InvActivity : BaseBleActivity<ActivityInvBinding>() {
         sendCmdService.startCmd()
     }
 
-    @SuppressLint("SetTextI18n")
     override fun initData() {
         vb.multipleCommands.setOnClickListener {
             if (boCanStartMultipleCommands) {
                 this.boSingleCmd = false
-                vb.content.text = ""
                 sendCmdService.startCmd()
             } else {
                 showError(getString(R.string.wait_command_finish))
             }
         }
-        vb.deviceSku.setOnClickListener {
+        vb.deviceAddress.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.INV, InvConsts.SKU)
+                    ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.DEVICE_ADDRESS)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
 
-        vb.outputVolts.setOnClickListener {
+        vb.auxiliaryBatVolts.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.INV, InvConsts.OUTPUT_VOLTS)
+                    ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.AUXILIARY_BATTERY_VOLTS)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
 
-        vb.outputFrequency.setOnClickListener {
+        vb.auxiliaryBatChargeAmps.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.INV, InvConsts.OUTPUT_FREQUENCY)
+                    ProtocolsConsts.getReadCmd(
+                        DeviceType.DCC,
+                        DCCConsts.AUXILIARY_BATTERY_CHARGE_AMPS
+                    )
+                BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
+            }
+        }
+
+        vb.auxiliaryBatChargeWatts.setOnClickListener {
+            this.boSingleCmd = true
+            bleMac?.let {
+                val cmdEntity =
+                    ProtocolsConsts.getReadCmd(
+                        DeviceType.DCC,
+                        DCCConsts.AUXILIARY_BATTERY_CHARGE_WATTS
+                    )
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
@@ -104,17 +121,21 @@ class InvActivity : BaseBleActivity<ActivityInvBinding>() {
             val baseParseEntity = ProtocolsConsts.parseResp(cmdTag, hexResp)
             //Distinguish between different response values by unique identification
             when (cmdTag) {
-                InvConsts.SKU -> {
+                DCCConsts.AUXILIARY_BATTERY_VOLTS -> {
                     //To display the parsed data, the organization needs to add it by itself
-                    vb.content.text = baseParseEntity.result()
-                }
-
-                InvConsts.OUTPUT_VOLTS -> {
                     vb.content.text = baseParseEntity.result() + UnitConsts.VOLTS
                 }
 
-                InvConsts.OUTPUT_FREQUENCY -> {
-                    vb.content.text = baseParseEntity.result() + UnitConsts.HZ
+                DCCConsts.DEVICE_ADDRESS -> {
+                    vb.content.text = baseParseEntity.result()
+                }
+
+                DCCConsts.AUXILIARY_BATTERY_CHARGE_AMPS -> {
+                    vb.content.text = baseParseEntity.result() + UnitConsts.AMPS
+                }
+
+                DCCConsts.AUXILIARY_BATTERY_CHARGE_WATTS -> {
+                    vb.content.text = baseParseEntity.result() + UnitConsts.KWH
                 }
             }
         } else {
@@ -139,7 +160,7 @@ class InvActivity : BaseBleActivity<ActivityInvBinding>() {
     private fun getSendCmdEntities(): MutableList<SendCmdEntity> {
         if (this.bleMac == null) return mutableListOf()
         val cmdList = mutableListOf<SendCmdEntity>()
-        DeviceConsts.mTestInvCmdList.forEach {
+        DeviceConsts.mTestDCCCmdList.forEach {
             cmdList.add(SendCmdEntity(this.bleMac!!, it.cmd, it.cmdTag))
         }
         return cmdList

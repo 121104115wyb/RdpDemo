@@ -20,4 +20,7 @@
     <string name="output_volts">Output Volts</string>
     <string name="output_frequency">Output Frequency</string>
 
+    <string name="auxiliary_bat_volts">Auxiliary Battery Volts</string>
+    <string name="auxiliary_bat_charge_amps">Auxiliary Battery Charge Amps</string>
+    <string name="auxiliary_bat_charge_watts">Auxiliary Battery Charge Watts</string>
 </resources>

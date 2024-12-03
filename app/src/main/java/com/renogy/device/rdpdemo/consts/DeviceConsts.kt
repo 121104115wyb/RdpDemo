@@ -3,6 +3,7 @@ package com.renogy.device.rdpdemo.consts
 import com.renogy.device.rdplibrary.ProtocolsConsts
 import com.renogy.device.rdplibrary.device.anotation.DeviceType
 import com.renogy.device.rdplibrary.device.ctrl.CtrlConsts
+import com.renogy.device.rdplibrary.device.dcc.DCCConsts
 import com.renogy.device.rdplibrary.device.entity.BaseSelectEntity
 import com.renogy.device.rdplibrary.device.inv.InvConsts
 
@@ -31,6 +32,23 @@ object DeviceConsts {
         ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.SYSTEM_VOLTS)
     )
 
+    val mTestDCCCmdList = mutableListOf(
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.DEVICE_ADDRESS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.SKU),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.BATTERY_TYPE),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.SYSTEM_VOLTS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.CHARGE_STATUS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.STARTER_BATTERY_VOLTS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.STARTER_BATTERY_AMPS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.SOLAR_CHARGE_VOLTS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.SOLAR_CHARGE_AMPS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.TOTAL_KWH_GENERATED),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.AUXILIARY_BATTERY_TEMPERATURE),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.DC_DC_MPPT_TEMPERATURE),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.MAX_CHARGE_AMPS),
+        ProtocolsConsts.getReadCmd(DeviceType.DCC, DCCConsts.BOOST_VOLTS)
+    )
+
     val mTestInvCmdList = mutableListOf(
         ProtocolsConsts.getReadCmd(DeviceType.INV, InvConsts.DEVICE_ADDRESS),
         ProtocolsConsts.getReadCmd(DeviceType.INV, InvConsts.SKU),
@@ -49,7 +67,8 @@ object DeviceConsts {
     val deviceList = mutableListOf(
         BaseSelectEntity.createNormal("Controller", false, DeviceType.CTRL),
         BaseSelectEntity.createNormal("Inverter", false, DeviceType.INV),
-        BaseSelectEntity.createNormal("Battery", false, DeviceType.BAT)
+        BaseSelectEntity.createNormal("Battery", false, DeviceType.BAT),
+        BaseSelectEntity.createNormal("DCC", false, DeviceType.DCC)
     )
 
 

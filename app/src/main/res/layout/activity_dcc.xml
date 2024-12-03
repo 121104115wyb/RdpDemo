@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/multiple_commands"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/multiple_commands"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/device_address"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/device_address"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/auxiliary_bat_volts"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/auxiliary_bat_volts"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/auxiliary_bat_charge_amps"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/auxiliary_bat_charge_amps"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/auxiliary_bat_charge_watts"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/auxiliary_bat_charge_watts"
+        android:textAllCaps="false" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>
