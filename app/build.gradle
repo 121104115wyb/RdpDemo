@@ -50,5 +50,5 @@ dependencies {
     implementation(libs.xpopup)
     implementation(libs.baserecyclerviewadapterhelper)
     implementation(libs.androidx.constraintlayout)
-    implementation 'com.renogy.rdpsdk:android:1.0.1'
+    implementation 'com.renogy.rdpsdk:android:1.0.2'
 }

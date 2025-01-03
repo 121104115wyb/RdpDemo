@@ -3,33 +3,25 @@ package com.renogy.device.rdpdemo.ui.activity
 import android.annotation.SuppressLint
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import com.renogy.device.rdplibrary.ProtocolsConsts
-import com.renogy.device.rdplibrary.device.anotation.DeviceType
-import com.renogy.device.rdplibrary.device.ctrl.CtrlConsts
-import com.renogy.device.rdplibrary.device.parse.UnitConsts
-import com.renogy.device.rdplibrary.utils.ModBusUtils
 import com.renogy.device.rdpdemo.R
 import com.renogy.device.rdpdemo.SendCmdEntity
 import com.renogy.device.rdpdemo.SendCmdService
 import com.renogy.device.rdpdemo.consts.DeviceConsts
-import com.renogy.device.rdpdemo.databinding.ActivityCtrlBinding
+import com.renogy.device.rdpdemo.databinding.ActivityBatBinding
 import com.renogy.device.rdpdemo.util.BtUtil
 import com.renogy.device.rdpdemo.util.StrUtils
+import com.renogy.device.rdplibrary.ProtocolsConsts
+import com.renogy.device.rdplibrary.device.anotation.DeviceType
 import com.renogy.device.rdplibrary.device.bat.BatConsts
+import com.renogy.device.rdplibrary.device.parse.UnitConsts
+import com.renogy.device.rdplibrary.utils.ModBusUtils
 
 
-/**
- * @author Create by 17474 on 2024/11/13.
- * Email： lishuwentimor1994@163.com
- * Describe：控制器命令测试
- */
-class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
-
-    override val viewBinding: ActivityCtrlBinding
-        get() = ActivityCtrlBinding.inflate(layoutInflater, bindView.root, true)
-
+class BatActivity : BaseBleActivity<ActivityBatBinding>() {
     private var boCanStartMultipleCommands = true
     private var boSingleCmd = false
+    override val viewBinding: ActivityBatBinding
+        get() = ActivityBatBinding.inflate(layoutInflater, bindView.root, true)
 
     override fun initView() {
         vb.content.movementMethod = ScrollingMovementMethod()
@@ -47,6 +39,9 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
 
             override fun onTimeOut(sendCmdEntity: SendCmdEntity?) {
                 super.onTimeOut(sendCmdEntity)
+                sendCmdEntity?.let { cmdData->
+                    Log.e("batCmdTimeOut","cmd:${cmdData.cmd}; cmdTag:${cmdData.cmdTag}")
+                }
             }
 
             override fun onInterval() {
@@ -63,44 +58,38 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
         sendCmdService.startCmd()
     }
 
-    @SuppressLint("SetTextI18n")
     override fun initData() {
         vb.multipleCommands.setOnClickListener {
             if (boCanStartMultipleCommands) {
                 this.boSingleCmd = false
-                vb.content.text = ""
                 sendCmdService.startCmd()
             } else {
                 showError(getString(R.string.wait_command_finish))
             }
         }
-        vb.deviceAddress.setOnClickListener {
+        vb.deviceSku.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
-                /**
-                 * DeviceType.CTRL  the device type
-                 * CtrlConsts.TOTAL_POWER_GENERATION the parameter name of the device
-                 */
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.DEVICE_ADDRESS)
+                    ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.SKU)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
 
-        vb.totalPowerGeneration.setOnClickListener {
+        vb.remainingCapacity.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.TOTAL_POWER_GENERATION)
+                    ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.REMAIN_CAPACITY)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
 
-        vb.solarVolts.setOnClickListener {
+        vb.totalCapacity.setOnClickListener {
             this.boSingleCmd = true
             bleMac?.let {
                 val cmdEntity =
-                    ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.SOLAR_VOLTS)
+                    ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.TOTAL_CAPACITY)
                 BtUtil.instance.send(it, cmdEntity.cmd, cmdEntity.cmdTag)
             }
         }
@@ -108,27 +97,28 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onCharChanged(mac: String, hexResp: String, cmdTag: String) {
-        if (boSingleCmd) {
+        if (boSingleCmd){
             val rspCheck = ModBusUtils.simpleCheck(hexResp)
             if (!rspCheck) return
             val baseParseEntity = ProtocolsConsts.parseResp(cmdTag, hexResp)
             //Distinguish between different response values by unique identification
             when (cmdTag) {
-                CtrlConsts.TOTAL_POWER_GENERATION -> {
+                BatConsts.SKU-> {
                     //To display the parsed data, the organization needs to add it by itself
-                    vb.content.text = baseParseEntity.result() + "kwh"
-                }
-
-                CtrlConsts.DEVICE_ADDRESS -> {
                     vb.content.text = baseParseEntity.result()
                 }
 
-                CtrlConsts.SOLAR_VOLTS -> {
-                    vb.content.text = baseParseEntity.result() + UnitConsts.VOLTS
+                BatConsts.REMAIN_CAPACITY -> {
+                    vb.content.text = baseParseEntity.result() + UnitConsts.AH
+                }
+
+                BatConsts.TOTAL_CAPACITY -> {
+                    vb.content.text = baseParseEntity.result() + UnitConsts.AH
                 }
             }
-        } else {
+        }else {
             super.onCharChanged(mac, hexResp, cmdTag)
+            //Parse the response value received from Bluetooth
             //Parse the response value received from Bluetooth
             val baseParseEntity = ProtocolsConsts.parseResp(cmdTag, hexResp)
             Log.d("testCmdTag", "cmdTag:$cmdTag")
@@ -149,7 +139,7 @@ class CtrlActivity : BaseBleActivity<ActivityCtrlBinding>() {
     private fun getSendCmdEntities(): MutableList<SendCmdEntity> {
         if (this.bleMac == null) return mutableListOf()
         val cmdList = mutableListOf<SendCmdEntity>()
-        DeviceConsts.mTestCtrlCmdList.forEach {
+        DeviceConsts.mTestBatCmdList.forEach {
             cmdList.add(SendCmdEntity(this.bleMac!!, it.cmd, it.cmdTag))
         }
         return cmdList

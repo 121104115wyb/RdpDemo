@@ -2,6 +2,7 @@ package com.renogy.device.rdpdemo.consts
 
 import com.renogy.device.rdplibrary.ProtocolsConsts
 import com.renogy.device.rdplibrary.device.anotation.DeviceType
+import com.renogy.device.rdplibrary.device.bat.BatConsts
 import com.renogy.device.rdplibrary.device.ctrl.CtrlConsts
 import com.renogy.device.rdplibrary.device.dcc.DCCConsts
 import com.renogy.device.rdplibrary.device.entity.BaseSelectEntity
@@ -30,6 +31,21 @@ object DeviceConsts {
         ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.CHARGING_STATUS),
         ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.BATTERY_TYPE),
         ProtocolsConsts.getReadCmd(DeviceType.CTRL, CtrlConsts.SYSTEM_VOLTS)
+    )
+
+    val mTestBatCmdList = mutableListOf(
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.DEVICE_ADDRESS),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.SKU),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.FIRMWARE_VERSION),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_VOLTS),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_AMPS),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.REMAIN_CAPACITY),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.TOTAL_CAPACITY),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_CELLS_NUMBER),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_TEMPERATURE_CELLS_NUMBER),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_CELLS_VOLTS),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.BATTERY_CELLS_TEMPERATURE),
+        ProtocolsConsts.getReadCmd(DeviceType.BAT, BatConsts.HEATER_MODE_STATUS)
     )
 
     val mTestDCCCmdList = mutableListOf(

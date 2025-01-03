@@ -21,6 +21,7 @@ import com.renogy.device.rdpdemo.util.BtUtil
 import com.renogy.device.rdpdemo.util.XpoUtils
 import com.renogy.device.rdpdemo.consts.DeviceConsts
 import com.renogy.device.rdpdemo.consts.DeviceConsts.getDeviceTypeArray
+import com.renogy.device.rdpdemo.ui.activity.BatActivity
 import com.renogy.device.rdpdemo.ui.activity.CtrlActivity
 import com.renogy.device.rdpdemo.ui.activity.DCCActivity
 import com.renogy.device.rdpdemo.ui.activity.InvActivity
@@ -240,7 +241,7 @@ class HomeActivity : BaseHomeActivity(), OnLeScanListener {
                 }
 
                 DeviceType.BAT -> {
-                    showToast("developing")
+                    startTargetActy(bleMac, this@HomeActivity, BatActivity::class.java)
                 }
             }
         }

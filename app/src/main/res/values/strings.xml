@@ -23,4 +23,6 @@
     <string name="auxiliary_bat_volts">Auxiliary Battery Volts</string>
     <string name="auxiliary_bat_charge_amps">Auxiliary Battery Charge Amps</string>
     <string name="auxiliary_bat_charge_watts">Auxiliary Battery Charge Watts</string>
+    <string name="remaining_capacity">Remaining Capacity</string>
+    <string name="total_capacity">Total Capacity</string>
 </resources>
