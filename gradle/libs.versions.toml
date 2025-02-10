@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.1"
+android = "1.0.2"
 baserecyclerviewadapterhelper = "3.0.11"
 blebase = "1.2.0"
 constraintlayout = "2.2.0"
@@ -14,6 +15,7 @@ material = "1.12.0"
 xpopup = "2.8.14"
 
 [libraries]
+android = { module = "com.renogy.rdpsdk:android", version.ref = "android" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 baserecyclerviewadapterhelper = { module = "com.github.CymChad:BaseRecyclerViewAdapterHelper", version.ref = "baserecyclerviewadapterhelper" }
